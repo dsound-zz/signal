@@ -1,0 +1,40 @@
+{
+  "name": "signal",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "db:migrate": "dotenv-cli -e .env.local -- tsx scripts/run-migration.ts",
+    "db:migrate:gemini": "dotenv-cli -e .env.local -- tsx scripts/run-gemini-migration.ts",
+    "db:push": "dotenv-cli -e .env.local -- drizzle-kit push",
+    "db:studio": "dotenv-cli -e .env.local -- drizzle-kit studio"
+  },
+  "dependencies": {
+    "@ai-sdk/anthropic": "^3.0.64",
+    "@google/generative-ai": "^0.24.1",
+    "@neondatabase/serverless": "^1.0.2",
+    "ai": "^6.0.138",
+    "drizzle-orm": "^0.45.1",
+    "next": "^14.2.0",
+    "openai": "^6.33.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.4.17",
+    "dotenv-cli": "^11.0.0",
+    "drizzle-kit": "^0.31.10",
+    "eslint": "^8",
+    "eslint-config-next": "^14.2.0",
+    "postcss": "^8.4.35",
+    "tailwindcss": "^3.4.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5"
+  }
+}
