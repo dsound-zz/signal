@@ -1,3 +1,10 @@
+## Claude Code Instructions
+
+- This file is auto-loaded by Claude Code at session start
+- Read ## Current State first — it tells you exactly where we are
+- Update this file at the end of every session per the Session Closeout Rules below
+- Never create separate notes files — all state lives here
+
 # SIGNAL — Agent Context
 
 ## What This App Is
@@ -120,6 +127,39 @@ CREATE TABLE signal_chunks (
 - README.md — Comprehensive setup and usage guide
 - SETUP_COMPLETE.md — Detailed infrastructure setup summary
 
+### ✅ COMPLETED: Retrieval Layer + Generation API (2026-03-25)
+
+**Retrieval Layer** (src/lib/retrieval.ts):
+
+- ✅ Vector similarity search via pgvector cosine distance (`<=>` operator)
+- ✅ Credibility tier filtering (`WHERE credibility_tier <= tierFilter`)
+- ✅ Configurable topK (default 8, capped at 20 via API)
+- ✅ Returns typed `RetrievedChunk[]` with similarity scores
+
+**Generation Layer** (src/lib/generation.ts):
+
+- ✅ SIGNAL_SYSTEM_PROMPT with strict citation-enforcement rules
+- ✅ Anthropic SDK (`@anthropic-ai/sdk`) — not Vercel AI SDK
+- ✅ Model: claude-sonnet-4-6
+- ✅ Source citation detection: parses `[Source N]` references to identify which chunks were cited
+- ✅ Formats chunks with tier labels, dates, page numbers, and declassification status
+
+**Query API Route** (src/app/api/query/route.ts):
+
+- ✅ POST /api/query endpoint
+- ✅ Input validation: rejects empty questions, invalid tierFilter, clamps topK to 20
+- ✅ Returns `{ answer, sources, metadata: { chunksRetrieved, queryTime, model } }`
+
+**Dependencies Added**:
+
+- `@anthropic-ai/sdk` — Anthropic SDK for direct Claude API calls
+
+**Decisions**:
+
+- Used Drizzle `sql` template tag with `::vector` cast for pgvector compatibility
+- Source citation detection falls back to all chunks if no `[Source N]` references are found
+- Generation does not stream (returns full answer) — streaming can be added later for UI
+
 ### 🔜 NEXT TASKS:
 
 1. **Document Ingestion Pipeline**:
@@ -128,25 +168,24 @@ CREATE TABLE signal_chunks (
    - Build ingestion scripts to process initial corpus
    - Generate embeddings and populate signal_chunks table
 
-2. **Retrieval Logic** (src/lib/retrieval.ts):
-   - Implement vector similarity search using pgvector
-   - Add credibility tier filtering
-   - Create reranking logic
-   - Build source metadata aggregation
-
-3. **Generation Logic** (src/lib/generation.ts):
-   - Integrate Anthropic Claude Sonnet via Vercel AI SDK
-   - Create system prompts for UAP context
-   - Implement citation formatting
-   - Build answer generation with source attribution
-
-4. **User Interface**:
+2. **User Interface**:
    - Create chat/query interface in src/app/page.tsx
    - Build source citation display components
-   - Add credibility tier indicators
-   - Implement streaming responses
+   - Add credibility tier indicators (Tier 1/2/3 badges)
+   - Implement streaming responses (upgrade generation.ts to stream)
 
-5. **API Routes**:
-   - POST /api/query — Main query endpoint
-   - GET /api/sources — List available sources
+3. **Additional API Routes**:
+   - GET /api/sources — List available sources in the corpus
    - POST /api/feedback — User feedback collection
+
+4. **Environment Variables** (still needed):
+   - GOOGLE_API_KEY — Google API key for Gemini embeddings
+   - ANTHROPIC_API_KEY — Anthropic API key
+
+## Session Closeout Rules
+
+At the end of every task, update this file with:
+
+- Move completed items to the appropriate ✅ COMPLETED section with date
+- Update 🔜 NEXT TASKS to reflect remaining and newly identified work
+- Note any decisions, tradeoffs, or constraints discovered during the session

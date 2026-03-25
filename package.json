@@ -10,10 +10,12 @@
     "db:migrate": "dotenv-cli -e .env.local -- tsx scripts/run-migration.ts",
     "db:migrate:gemini": "dotenv-cli -e .env.local -- tsx scripts/run-gemini-migration.ts",
     "db:push": "dotenv-cli -e .env.local -- drizzle-kit push",
-    "db:studio": "dotenv-cli -e .env.local -- drizzle-kit studio"
+    "db:studio": "dotenv-cli -e .env.local -- drizzle-kit studio",
+    "db:ingest": "dotenv-cli -e .env.local -- tsx scripts/ingest-document.ts"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^3.0.64",
+    "@anthropic-ai/sdk": "^0.80.0",
     "@google/generative-ai": "^0.24.1",
     "@neondatabase/serverless": "^1.0.2",
     "ai": "^6.0.138",
