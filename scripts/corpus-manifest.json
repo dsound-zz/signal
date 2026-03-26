@@ -203,5 +203,32 @@
     "docDate": "1955-05-05",
     "declassified": true,
     "sourceUrl": "https://www.archives.gov/research/military/air-force/ufos"
+  },
+  {
+    "pdfUrl": "https://www.congress.gov/118/meeting/house/116282/documents/HHRG-118-GO06-Transcript-20230726.pdf",
+    "sourceTitle": "Grusch Written Statement 2023",
+    "sourceType": "congressional_testimony",
+    "credibilityTier": 3,
+    "docDate": "2023-07-26",
+    "declassified": true,
+    "sourceUrl": "https://www.govinfo.gov/app/collection/chrg"
+  },
+  {
+    "pdfUrl": "https://oversight.house.gov/wp-content/uploads/2023/07/Ryan-HOC-Testimony.pdf",
+    "sourceTitle": "Ryan Graves Written Statement 2023",
+    "sourceType": "congressional_testimony",
+    "credibilityTier": 3,
+    "docDate": "2023-07-26",
+    "declassified": true,
+    "sourceUrl": "https://www.govinfo.gov/app/collection/chrg"
+  },
+  {
+    "pdfUrl": "https://static1.squarespace.com/static/5cf80ff422b5a90001351e31/t/5d02fcf59b80d700011949e9/1560476919496/narcap_IR-4_DWeinstein_NEW_3-21-12.pdf",
+    "sourceTitle": "NARCAP TR-1 UAP Aviation Report",
+    "sourceType": "witness_account",
+    "credibilityTier": 3,
+    "docDate": "2012-07-12",
+    "declassified": true,
+    "sourceUrl": "https://www.govinfo.gov/app/collection/chrg"
   }
 ]
