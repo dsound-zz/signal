@@ -156,7 +156,7 @@ export default function ChatInterface() {
 
             {error && !isLoading && (
               <div className="rounded border border-red-900 bg-red-950/30 px-4 py-3">
-                <p className="text-sm text-red-400">{error.message}</p>
+                <p className="text-sm text-red-400">{error.message || 'Something went wrong. Please try again.'}</p>
               </div>
             )}
 

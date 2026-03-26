@@ -54,25 +54,33 @@ export async function POST(request: NextRequest) {
     return new Response(JSON.stringify({ error: 'tierFilter must be 1, 2, or 3' }), { status: 400 });
   }
 
-  const chunks = await retrieveChunks({
-    query,
-    topK: 8,
-    tierFilter: tierFilter as 1 | 2 | 3 | undefined,
-  });
+  try {
+    const chunks = await retrieveChunks({
+      query,
+      topK: 8,
+      tierFilter: tierFilter as 1 | 2 | 3 | undefined,
+    });
 
-  const sources = chunks.map((c) => ({
-    title: c.sourceTitle,
-    tier: c.credibilityTier as 1 | 2 | 3,
-    page: c.pageNumber,
-    url: c.sourceUrl,
-    date: c.docDate,
-    declassified: c.declassified,
-    sourceType: c.sourceType,
-  }));
+    const sources = chunks.map((c) => ({
+      title: c.sourceTitle,
+      tier: c.credibilityTier as 1 | 2 | 3,
+      page: c.pageNumber,
+      url: c.sourceUrl,
+      date: c.docDate,
+      declassified: c.declassified,
+      sourceType: c.sourceType,
+    }));
 
-  console.log('[signal/query] retrieved', chunks.length, 'chunks for query:', query.slice(0, 60));
+    console.log('[signal/query] retrieved', chunks.length, 'chunks for query:', query.slice(0, 60));
 
-  return generateAnswer(query, chunks, {
-    'X-Sources': JSON.stringify(sources),
-  });
+    return generateAnswer(query, chunks, {
+      'X-Sources': JSON.stringify(sources),
+    });
+  } catch (error) {
+    console.error('[signal/query] error:', error);
+    return new Response(
+      JSON.stringify({ error: error instanceof Error ? error.message : 'Internal server error' }),
+      { status: 500 }
+    );
+  }
 }
