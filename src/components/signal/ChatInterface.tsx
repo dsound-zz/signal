@@ -25,7 +25,7 @@ export default function ChatInterface() {
           const raw = response.headers.get('X-Sources');
           if (raw) {
             try {
-              pendingSourcesRef.current = JSON.parse(raw) as Source[];
+              pendingSourcesRef.current = JSON.parse(decodeURIComponent(raw)) as Source[];
             } catch {
               pendingSourcesRef.current = [];
             }

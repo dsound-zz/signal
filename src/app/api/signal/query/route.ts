@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
     console.log('[signal/query] retrieved', chunks.length, 'chunks for query:', query.slice(0, 60));
 
     return generateAnswer(query, chunks, {
-      'X-Sources': JSON.stringify(sources),
+      'X-Sources': encodeURIComponent(JSON.stringify(sources)),
     });
   } catch (error) {
     console.error('[signal/query] error:', error);
