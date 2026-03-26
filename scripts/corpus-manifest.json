@@ -107,7 +107,6 @@
     "docDate": "2024-01-01",
     "declassified": true
   },
-
   {
     "localPath": "pdfs/NASA_UAP_Study_2023.pdf",
     "sourceTitle": "NASA UAP Independent Study Report 2023",
@@ -230,5 +229,14 @@
     "docDate": "2012-07-12",
     "declassified": true,
     "sourceUrl": "https://www.govinfo.gov/app/collection/chrg"
+  },
+  {
+    "localPath": "pdfs/The-2001-Disclosure-Project.txt",
+    "sourceTitle": "The 2001 Disclosure Project",
+    "sourceUrl": "https://archive.org/stream/DisclosureProjectBriefingDocument/DisclosureProjectBriefingDocument_djvu.txt",
+    "sourceType": "witness_account",
+    "credibilityTier": 3,
+    "docDate": "2001-01-01",
+    "declassified": true
   }
 ]

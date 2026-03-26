@@ -22,6 +22,7 @@ import { chunkPages, PageContent } from './chunk';
 
 interface ManifestEntry {
   pdfUrl?: string;
+  txtUrl?: string;
   localPath?: string;
   sourceTitle: string;
   sourceUrl?: string;
@@ -55,12 +56,41 @@ function downloadPdf(url: string, destPath: string): void {
   }
 }
 
+function downloadFile(url: string, destPath: string): void {
+  console.log(`[batch] downloading ${url}`);
+  execSync(
+    `curl -sS -L -A "Mozilla/5.0" --retry 3 --retry-delay 2 -o "${destPath}" "${url}"`,
+    { stdio: 'inherit' }
+  );
+}
+
 function extractPages(pdfPath: string): PageContent[] {
   const jsonPath = pdfPath.replace(/\.pdf$/i, '.json');
   execSync(`python3 scripts/ingest.py "${pdfPath}" "${jsonPath}"`, { stdio: 'inherit' });
   const raw = JSON.parse(readFileSync(jsonPath, 'utf-8')) as { pages: PageContent[] };
   unlinkSync(jsonPath);
   return raw.pages;
+}
+
+function extractPagesFromTxt(txtPath: string): PageContent[] {
+  const text = readFileSync(txtPath, 'utf-8');
+
+  // Split by form-feed characters (used by some document exports as page breaks)
+  if (text.includes('\f')) {
+    const pages = text
+      .split('\f')
+      .map((t, i) => ({ page_number: i + 1, text: t.trim() }))
+      .filter((p) => p.text.length >= 50);
+    if (pages.length >= 2) {
+      console.log(`[batch] split txt into ${pages.length} pages via form-feed`);
+      return pages;
+    }
+  }
+
+  // No page structure — return as single page; chunker will split by word count
+  const trimmed = text.trim();
+  console.log(`[batch] treating txt as single page (${trimmed.length} chars)`);
+  return [{ page_number: 1, text: trimmed }];
 }
 
 async function isAlreadyIngested(
@@ -79,19 +109,26 @@ async function ingestDocument(
   db: ReturnType<typeof drizzle>,
   entry: ManifestEntry
 ): Promise<number> {
-  let tmpPdf = join(tmpdir(), `signal-ingest-${Date.now()}.pdf`);
+  let tmpFile = join(tmpdir(), `signal-ingest-${Date.now()}`);
   let shouldCleanup = true;
+  let filePath = tmpFile;
 
   try {
     if (entry.localPath && existsSync(entry.localPath)) {
       console.log(`[batch] using local file: ${entry.localPath}`);
-      tmpPdf = entry.localPath;
+      filePath = entry.localPath;
       shouldCleanup = false;
+    } else if (entry.txtUrl) {
+      filePath = tmpFile + '.txt';
+      downloadFile(entry.txtUrl, filePath);
     } else {
-      if (!entry.pdfUrl) throw new Error('no pdfUrl or valid localPath for entry');
-      downloadPdf(entry.pdfUrl, tmpPdf);
+      if (!entry.pdfUrl) throw new Error('no pdfUrl, txtUrl, or valid localPath for entry');
+      filePath = tmpFile + '.pdf';
+      downloadPdf(entry.pdfUrl, filePath);
     }
-    const pages = extractPages(tmpPdf);
+
+    const isTxt = filePath.toLowerCase().endsWith('.txt');
+    const pages = isTxt ? extractPagesFromTxt(filePath) : extractPages(filePath);
 
     const chunks = chunkPages(pages);
     const total = chunks.length;
@@ -139,7 +176,7 @@ async function ingestDocument(
 
     return inserted;
   } finally {
-    if (shouldCleanup && existsSync(tmpPdf)) unlinkSync(tmpPdf);
+    if (shouldCleanup && existsSync(filePath)) unlinkSync(filePath);
   }
 }
 
