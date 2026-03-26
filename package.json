@@ -7,11 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:migrate": "dotenv-cli -e .env.local -- tsx scripts/run-migration.ts",
-    "db:migrate:gemini": "dotenv-cli -e .env.local -- tsx scripts/run-gemini-migration.ts",
-    "db:push": "dotenv-cli -e .env.local -- drizzle-kit push",
-    "db:studio": "dotenv-cli -e .env.local -- drizzle-kit studio",
-    "db:ingest": "dotenv-cli -e .env.local -- tsx scripts/ingest-document.ts"
+    "db:migrate": "dotenv -e .env.local -- tsx scripts/run-migration.ts",
+    "db:migrate:gemini": "dotenv -e .env.local -- tsx scripts/run-gemini-migration.ts",
+    "db:push": "dotenv -e .env.local -- drizzle-kit push",
+    "db:studio": "dotenv -e .env.local -- drizzle-kit studio",
+    "db:ingest": "dotenv -e .env.local -- tsx scripts/ingest-document.ts",
+    "db:ingest:batch": "dotenv -e .env.local -- tsx scripts/ingest-batch.ts"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^3.0.64",

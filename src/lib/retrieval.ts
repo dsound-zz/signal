@@ -22,8 +22,26 @@ export interface RetrievedChunk {
   similarity: number;
 }
 
+const UAP_TERM_CORRECTIONS: Record<string, string> = {
+  'ARRO': 'AARO',
+  'grush': 'Grusch',
+  'majestic 12': 'MJ-12',
+  'nimitz': 'Nimitz',
+  'tictac': 'Tic Tac',
+  'tic-tac': 'Tic Tac',
+};
+
+function normalizeQuery(query: string): string {
+  let normalized = query;
+  for (const [wrong, right] of Object.entries(UAP_TERM_CORRECTIONS)) {
+    normalized = normalized.replace(new RegExp(wrong, 'gi'), right);
+  }
+  return normalized;
+}
+
 export async function retrieveChunks(options: RetrievalOptions): Promise<RetrievedChunk[]> {
-  const { query, topK = 8, tierFilter } = options;
+  const { query: rawQuery, topK = 8, tierFilter } = options;
+  const query = normalizeQuery(rawQuery);
 
   const embedding = await generateEmbedding(query);
   const embeddingStr = `[${embedding.join(',')}]`;

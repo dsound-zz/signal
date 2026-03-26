@@ -1,0 +1,38 @@
+[
+  {
+    "localPath": "Prelimary-Assessment-UAP-20210625.pdf",
+    "sourceTitle": "DNI Preliminary Assessment UAP 2021",
+    "sourceUrl": "https://www.dni.gov/files/ODNI/documents/assessments/Prelimary-Assessment-UAP-20210625.pdf",
+    "sourceType": "government_report",
+    "credibilityTier": 1,
+    "docDate": "2021-06-25",
+    "declassified": true
+  },
+  {
+    "localPath": "Unclassified-2022-Annual-Report-UAP.pdf",
+    "sourceTitle": "DNI Annual Report UAP 2022",
+    "sourceUrl": "https://www.dni.gov/files/ODNI/documents/assessments/Unclassified-2022-Annual-Report-UAP.pdf",
+    "sourceType": "government_report",
+    "credibilityTier": 1,
+    "docDate": "2022-10-14",
+    "declassified": true
+  },
+  {
+    "localPath": "FY2023-Consolidated-Annual-Report-UAP-Oct2023.pdf",
+    "sourceTitle": "DNI Consolidated Annual Report UAP 2023",
+    "sourceUrl": "https://www.dni.gov/files/ODNI/documents/assessments/FY2023-Consolidated-Annual-Report-UAP-Oct2023.pdf",
+    "sourceType": "government_report",
+    "credibilityTier": 1,
+    "docDate": "2023-10-17",
+    "declassified": true
+  },
+  {
+    "localPath": "DOPSR-2024-0263-AARO-HISTORICAL-RECORD-REPORT-VOLUME-1-2024.pdf",
+    "sourceTitle": "AARO Historical Record Report Volume 1",
+    "sourceType": "government_report",
+    "credibilityTier": 1,
+    "docDate": "2024-03-08",
+    "declassified": true,
+    "sourceUrl": "https://media.defense.gov/2024/Mar/08/2003409233/-1/-1/0/DOPSR-2024-0263-AARO-HISTORICAL-RECORD-REPORT-VOLUME-1-2024.PDF"
+  }
+]
