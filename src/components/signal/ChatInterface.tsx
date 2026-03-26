@@ -36,7 +36,7 @@ export default function ChatInterface() {
     []
   );
 
-  const { messages, sendMessage, status, error } = useChat({
+  const { messages, setMessages, sendMessage, status, error } = useChat({
     transport,
     onFinish: ({ message }) => {
       if (pendingSourcesRef.current.length > 0) {
@@ -46,6 +46,14 @@ export default function ChatInterface() {
       }
     },
   });
+
+  const handleReset = () => {
+    setMessages([]);
+    setSourcesMap({});
+    setInputValue('');
+    setHighlightedTitle(null);
+    pendingSourcesRef.current = [];
+  };
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -175,6 +183,16 @@ export default function ChatInterface() {
           >
             Send
           </button>
+          {hasMessages && (
+            <button
+              type="button"
+              onClick={handleReset}
+              disabled={isLoading}
+              className="px-5 py-2.5 border border-slate-700 hover:border-slate-500 text-slate-400 hover:text-slate-200 disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium rounded-lg transition-colors"
+            >
+              Reset
+            </button>
+          )}
         </form>
       </div>
     </div>
