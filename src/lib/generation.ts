@@ -1,35 +1,24 @@
-import Anthropic from '@anthropic-ai/sdk';
+import { streamText } from 'ai';
+import { anthropic } from '@ai-sdk/anthropic';
 import type { RetrievedChunk } from './retrieval';
 
-const client = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
-});
+export const SIGNAL_SYSTEM_PROMPT = `You are SIGNAL, a research assistant that answers questions about UAP (Unidentified Anomalous Phenomena) using only the provided source documents.
 
-const SIGNAL_SYSTEM_PROMPT = `You are SIGNAL, an AI research assistant specializing in UAP (Unidentified Aerial Phenomena). You answer questions strictly based on the provided source documents.
+STRICT RULES:
 
-RULES:
-1. Only state what is explicitly supported by the provided sources
-2. For every factual claim, cite the source using [Source N] notation
-3. If sources conflict, acknowledge the conflict and cite both positions
-4. If the answer is not in the sources, say "The available sources do not address this question."
-5. Never speculate beyond what the sources state
-6. Distinguish between official government positions and other sources
+Only use information from the provided source chunks. Never use your internal training knowledge about UAPs.
 
-FORMAT:
-- Lead with a direct answer if the sources support one
-- Follow with supporting evidence and citations
-- End with a "Sources" section listing each cited source with its credibility tier`;
+Every factual claim must be followed by a citation in this format: [SOURCE: "document title", p.X]
 
-export interface GenerationOptions {
-  query: string;
-  chunks: RetrievedChunk[];
-}
+If the provided sources do not contain enough information to answer the question, say exactly: "The available documents do not contain sufficient information to answer this question."
 
-export interface GenerationResult {
-  answer: string;
-  sourcesUsed: RetrievedChunk[];
-  model: string;
-}
+Separate your answer into two sections:
+CONFIRMED: Claims supported by Tier 1 government documents
+CONTEXT: Additional context from Tier 2-3 sources (clearly labeled as less authoritative)
+
+Do not speculate. Do not infer beyond what sources state.
+
+If sources contradict each other, note the contradiction explicitly.`;
 
 function formatChunksAsContext(chunks: RetrievedChunk[]): string {
   return chunks
@@ -51,41 +40,20 @@ function formatChunksAsContext(chunks: RetrievedChunk[]): string {
     .join('\n\n---\n\n');
 }
 
-export async function generateAnswer(options: GenerationOptions): Promise<GenerationResult> {
-  const { query, chunks } = options;
-  const model = 'claude-sonnet-4-6';
-
+export async function generateAnswer(
+  query: string,
+  chunks: RetrievedChunk[]
+): Promise<ReadableStream> {
   const context = formatChunksAsContext(chunks);
   const userMessage = `SOURCE DOCUMENTS:\n\n${context}\n\n---\n\nQUESTION: ${query}`;
 
-  const response = await client.messages.create({
-    model,
-    max_tokens: 2048,
+  const result = streamText({
+    model: anthropic('claude-sonnet-4-6'),
     system: SIGNAL_SYSTEM_PROMPT,
     messages: [{ role: 'user', content: userMessage }],
   });
 
-  const answer = response.content
-    .filter((block) => block.type === 'text')
-    .map((block) => (block as { type: 'text'; text: string }).text)
-    .join('');
+  console.log('[generation] streaming answer for query, using', chunks.length, 'chunks');
 
-  // Determine which sources were cited by checking for [Source N] references
-  const citedIndices = new Set<number>();
-  const citationPattern = /\[Source (\d+)\]/gi;
-  let match;
-  while ((match = citationPattern.exec(answer)) !== null) {
-    const idx = parseInt(match[1], 10) - 1;
-    if (idx >= 0 && idx < chunks.length) {
-      citedIndices.add(idx);
-    }
-  }
-
-  const sourcesUsed = citedIndices.size > 0
-    ? [...citedIndices].sort((a, b) => a - b).map((i) => chunks[i])
-    : chunks;
-
-  console.log('[generation] answer generated, cited', sourcesUsed.length, 'sources');
-
-  return { answer, sourcesUsed, model };
+  return result.toDataStream();
 }

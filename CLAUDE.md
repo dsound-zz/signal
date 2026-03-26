@@ -160,6 +160,28 @@ CREATE TABLE signal_chunks (
 - Source citation detection falls back to all chunks if no `[Source N]` references are found
 - Generation does not stream (returns full answer) — streaming can be added later for UI
 
+### ✅ COMPLETED: Chat UI with Source Panel (2026-03-25)
+
+**Components Built**:
+
+- ✅ `src/components/signal/types.ts` — Shared `Source` interface
+- ✅ `src/components/signal/SourcePanel.tsx` — Source cards with Tier 1/2/3 badges, declassified flag, hover highlight
+- ✅ `src/components/signal/AnswerView.tsx` — Parses CONFIRMED/CONTEXT sections; inline citation badges that highlight source cards on hover
+- ✅ `src/components/signal/ChatInterface.tsx` — `useChat` streaming hook, message list, loading text, context toggle
+- ✅ `src/app/page.tsx` — Full-page dark layout (slate-900), SIGNAL wordmark header
+
+**API Route Updated**:
+
+- ✅ `/api/signal/query` now accepts Vercel AI SDK `useChat` message format `{ messages: [...] }` instead of `{ query }`
+- ✅ Sources passed via `X-Sources` response header; captured in `useChat`'s `onResponse` callback and mapped to messages via `onFinish`
+
+**Decisions**:
+
+- Sources are linked to specific messages via `sourcesMap: Record<messageId, Source[]>` state — `onResponse` captures sources to a ref, `onFinish` assigns them to the completed message ID
+- `showContext` is a global toggle (affects all messages) placed near each answer header
+- Citation badges in AnswerView show abbreviated title or page number on hover; full title in tooltip
+- `generation.ts` uses Vercel AI SDK `streamText` + `@ai-sdk/anthropic` (not the raw `@anthropic-ai/sdk`)
+
 ### 🔜 NEXT TASKS:
 
 1. **Document Ingestion Pipeline**:
@@ -168,15 +190,14 @@ CREATE TABLE signal_chunks (
    - Build ingestion scripts to process initial corpus
    - Generate embeddings and populate signal_chunks table
 
-2. **User Interface**:
-   - Create chat/query interface in src/app/page.tsx
-   - Build source citation display components
-   - Add credibility tier indicators (Tier 1/2/3 badges)
-   - Implement streaming responses (upgrade generation.ts to stream)
-
-3. **Additional API Routes**:
+2. **Additional API Routes**:
    - GET /api/sources — List available sources in the corpus
    - POST /api/feedback — User feedback collection
+
+3. **UI Enhancements**:
+   - Tier filter dropdown in UI (pass as `body` param via `useChat`)
+   - Stream the "Searching X documents..." count from actual retrieval result
+   - Mobile layout polish
 
 4. **Environment Variables** (still needed):
    - GOOGLE_API_KEY — Google API key for Gemini embeddings
