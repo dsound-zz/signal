@@ -5,4 +5,5 @@ export interface Source {
   url: string | null;
   date: string | null;
   declassified: boolean;
+  sourceType: string;
 }

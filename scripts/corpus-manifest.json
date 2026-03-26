@@ -1,6 +1,6 @@
 [
   {
-    "localPath": "Prelimary-Assessment-UAP-20210625.pdf",
+    "localPath": "pdfs/Prelimary-Assessment-UAP-20210625.pdf",
     "sourceTitle": "DNI Preliminary Assessment UAP 2021",
     "sourceUrl": "https://www.dni.gov/files/ODNI/documents/assessments/Prelimary-Assessment-UAP-20210625.pdf",
     "sourceType": "government_report",
@@ -9,7 +9,7 @@
     "declassified": true
   },
   {
-    "localPath": "Unclassified-2022-Annual-Report-UAP.pdf",
+    "localPath": "pdfs/Unclassified-2022-Annual-Report-UAP.pdf",
     "sourceTitle": "DNI Annual Report UAP 2022",
     "sourceUrl": "https://www.dni.gov/files/ODNI/documents/assessments/Unclassified-2022-Annual-Report-UAP.pdf",
     "sourceType": "government_report",
@@ -18,7 +18,7 @@
     "declassified": true
   },
   {
-    "localPath": "FY2023-Consolidated-Annual-Report-UAP-Oct2023.pdf",
+    "localPath": "pdfs/FY2023-Consolidated-Annual-Report-UAP-Oct2023.pdf",
     "sourceTitle": "DNI Consolidated Annual Report UAP 2023",
     "sourceUrl": "https://www.dni.gov/files/ODNI/documents/assessments/FY2023-Consolidated-Annual-Report-UAP-Oct2023.pdf",
     "sourceType": "government_report",
@@ -27,12 +27,92 @@
     "declassified": true
   },
   {
-    "localPath": "DOPSR-2024-0263-AARO-HISTORICAL-RECORD-REPORT-VOLUME-1-2024.pdf",
+    "localPath": "pdfs/DOPSR-2024-0263-AARO-HISTORICAL-RECORD-REPORT-VOLUME-1-2024.pdf",
     "sourceTitle": "AARO Historical Record Report Volume 1",
+    "sourceUrl": "https://media.defense.gov/2024/Mar/08/2003409233/-1/-1/0/DOPSR-2024-0263-AARO-HISTORICAL-RECORD-REPORT-VOLUME-1-2024.PDF",
     "sourceType": "government_report",
     "credibilityTier": 1,
     "docDate": "2024-03-08",
-    "declassified": true,
-    "sourceUrl": "https://media.defense.gov/2024/Mar/08/2003409233/-1/-1/0/DOPSR-2024-0263-AARO-HISTORICAL-RECORD-REPORT-VOLUME-1-2024.PDF"
+    "declassified": true
+  },
+  {
+    "localPath": "pdfs/2025_UAP_Workshop_Paper.pdf",
+    "sourceTitle": "AARO 2025 UAP Workshop: Narrative Data and Analysis",
+    "sourceUrl": "https://www.aaro.mil/Portals/136/PDFs/Information%20Papers/2025_UAP_Workshop_Paper.pdf",
+    "sourceType": "government_report",
+    "credibilityTier": 1,
+    "docDate": "2025-08-01",
+    "declassified": true
+  },
+  {
+    "localPath": "pdfs/AARO_Declassification_Info_Paper_2025.pdf",
+    "sourceTitle": "AARO Declassification Information Paper 2025",
+    "sourceUrl": "https://www.aaro.mil/Portals/136/PDFs/Information%20Papers/AARO_Declassification_Info_Paper_2025.pdf",
+    "sourceType": "government_report",
+    "credibilityTier": 1,
+    "docDate": "2025-01-01",
+    "declassified": true
+  },
+  {
+    "localPath": "pdfs/ORNL_ANALYSIS_OF_AN_ALUMINUM_SPECIMEN.pdf",
+    "sourceTitle": "ORNL Analysis of Aluminum Specimen",
+    "sourceUrl": "https://www.aaro.mil/Portals/136/PDFs/Information%20Papers/ORNL_ANALYSIS_OF_AN_ALUMINUM_SPECIMEN.pdf",
+    "sourceType": "scientific_paper",
+    "credibilityTier": 1,
+    "docDate": "2024-01-01",
+    "declassified": true
+  },
+  {
+    "localPath": "pdfs/AARO_Aluminum_Materials_Analysis_Supplement_Jan2026.pdf",
+    "sourceTitle": "AARO Supplement to ORNL Aluminum Analysis 2026",
+    "sourceUrl": "https://www.aaro.mil/Portals/136/PDFs/Information%20Papers/AARO_Aluminum_Materials_Analysis_Supplement_Jan2026.pdf",
+    "sourceType": "government_report",
+    "credibilityTier": 1,
+    "docDate": "2026-01-01",
+    "declassified": true
+  },
+  {
+    "localPath": "pdfs/ORNL-Synopsis_Analysis_of_a_Metallic_Specimen.pdf",
+    "sourceTitle": "ORNL Analysis of Metallic Specimen",
+    "sourceUrl": "https://www.aaro.mil/Portals/136/PDFs/Information%20Papers/ORNL-Synopsis_Analysis_of_a_Metallic_Specimen.pdf",
+    "sourceType": "scientific_paper",
+    "credibilityTier": 1,
+    "docDate": "2024-04-01",
+    "declassified": true
+  },
+  {
+    "localPath": "pdfs/AAROs_Supplement_to_ORNLs_Analysis_of_a_Metallic_Specimen.pdf",
+    "sourceTitle": "AARO Supplement to ORNL Metallic Specimen Analysis",
+    "sourceUrl": "https://www.aaro.mil/Portals/136/PDFs/Information%20Papers/AAROs_Supplement_to_ORNLs_Analysis_of_a_Metallic_Specimen.pdf",
+    "sourceType": "government_report",
+    "credibilityTier": 1,
+    "docDate": "2024-04-01",
+    "declassified": true
+  },
+  {
+    "localPath": "pdfs/AARO_Satellite_Flaring_Paper_508_FINAL_04222025.pdf",
+    "sourceTitle": "AARO Starlink Satellite Flaring and UAP Observations",
+    "sourceUrl": "https://www.aaro.mil/Portals/136/PDFs/Information%20Papers/AARO_Satellite_Flaring_Paper_508_FINAL_04222025.pdf",
+    "sourceType": "government_report",
+    "credibilityTier": 1,
+    "docDate": "2025-04-22",
+    "declassified": true
+  },
+  {
+    "localPath": "pdfs/AARO_Effect_of_Forced_Perspective_and_Parallax_View_on_UAP_Observations_2024.pdf",
+    "sourceTitle": "AARO Forced Perspective and Parallax UAP Observations",
+    "sourceUrl": "https://www.aaro.mil/Portals/136/PDFs/Information%20Papers/AARO_Effect_of_Forced_Perspective_and_Parallax_View_on_UAP_Observations_2024.pdf",
+    "sourceType": "government_report",
+    "credibilityTier": 1,
+    "docDate": "2024-01-01",
+    "declassified": true
+  },
+  {
+    "pdfUrl": "https://smd-cms.nasa.gov/wp-content/uploads/2023/09/uap-independent-study-team-final-report.pdf",
+    "sourceTitle": "NASA UAP Independent Study Report 2023",
+    "sourceType": "scientific_report",
+    "credibilityTier": 2,
+    "docDate": "2023-09-14",
+    "declassified": true
   }
 ]

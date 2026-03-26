@@ -130,7 +130,7 @@ async function ingestDocument(
         console.log(`[batch]   chunk ${i + 1}/${total} (${inserted} ok, ${errors} errors)`);
       }
 
-      if (i < chunks.length - 1) await sleep(100);
+      if (i < chunks.length - 1) await sleep(500);
     }
 
     if (errors > 0) {

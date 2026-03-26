@@ -71,10 +71,26 @@ export default function ChatInterface() {
       {/* Messages */}
       <div className="flex-1 overflow-y-auto px-4 py-6">
         {!hasMessages ? (
-          <div className="flex items-center justify-center h-full min-h-[200px]">
+          <div className="flex flex-col items-center justify-center h-full min-h-[200px] gap-6">
             <p className="text-slate-500 text-sm text-center max-w-sm">
-              Ask anything about UAP disclosures, government reports, or historical sightings.
+              Ask anything about UAP disclosures, government reports, or material analysis.
             </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-w-xl w-full">
+              {[
+                'What does the government say about UAP threats to national security?',
+                'What did ORNL find when analyzing the recovered metallic specimens?',
+                'How has the number of UAP reports changed between 2021 and 2023?',
+                'What explanations has AARO given for UAP misidentifications?',
+              ].map((q) => (
+                <button
+                  key={q}
+                  onClick={() => setInputValue(q)}
+                  className="text-left text-xs text-slate-400 hover:text-slate-200 border border-slate-700 hover:border-slate-500 rounded-lg px-3 py-2.5 transition-colors leading-snug"
+                >
+                  {q}
+                </button>
+              ))}
+            </div>
           </div>
         ) : (
           <div className="space-y-10 max-w-4xl mx-auto">
@@ -126,7 +142,7 @@ export default function ChatInterface() {
                 <span className="text-xs font-semibold text-slate-500 uppercase tracking-widest block mb-3">
                   Signal
                 </span>
-                <p className="text-sm text-slate-400">Searching 8 documents...</p>
+                <p className="text-sm text-slate-400">Searching documents...</p>
               </div>
             )}
 

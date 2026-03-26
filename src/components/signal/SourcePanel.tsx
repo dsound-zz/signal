@@ -8,6 +8,17 @@ const TIER_CONFIG: Record<1 | 2 | 3, { label: string; dot: string; badge: string
   3: { label: 'Tier 3 — Unverified', dot: 'bg-red-500', badge: 'text-red-400 border-red-800' },
 };
 
+const SOURCE_TYPE_LABELS: Record<string, string> = {
+  government_report: 'Gov Report',
+  scientific_report: 'Scientific',
+  technical_report: 'Technical',
+  congressional_testimony: 'Testimony',
+  foia_document: 'FOIA',
+  scientific_paper: 'Paper',
+  investigative_journalism: 'Press',
+  witness_account: 'Witness',
+};
+
 interface SourcePanelProps {
   sources: Source[];
   highlightedTitle: string | null;
@@ -25,25 +36,28 @@ export default function SourcePanel({ sources, highlightedTitle, onHoverSource }
       {sorted.map((source, i) => {
         const tier = TIER_CONFIG[source.tier];
         const isHighlighted = highlightedTitle === source.title;
+        const typeLabel = source.sourceType ? SOURCE_TYPE_LABELS[source.sourceType] ?? source.sourceType : null;
 
         return (
           <div
             key={i}
             onMouseEnter={() => onHoverSource(source.title)}
             onMouseLeave={() => onHoverSource(null)}
-            className={`rounded border p-3 transition-colors cursor-default ${
-              isHighlighted
-                ? 'border-slate-500 bg-slate-700'
-                : 'border-slate-700 bg-slate-800/50 hover:border-slate-600'
-            }`}
+            className={`rounded border p-3 transition-colors cursor-default ${isHighlighted
+              ? 'border-slate-500 bg-slate-700'
+              : 'border-slate-700 bg-slate-800/50 hover:border-slate-600'
+              }`}
           >
             <div className="flex items-center gap-2 flex-wrap mb-2">
-              <span
-                className={`inline-flex items-center gap-1.5 text-xs px-1.5 py-0.5 rounded border ${tier.badge}`}
-              >
+              <span className={`inline-flex items-center gap-1.5 text-xs px-1.5 py-0.5 rounded border ${tier.badge}`}>
                 <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${tier.dot}`} />
                 {tier.label}
               </span>
+              {typeLabel && (
+                <span className="text-xs px-1.5 py-0.5 rounded border border-slate-700 text-slate-400">
+                  {typeLabel}
+                </span>
+              )}
               {source.declassified && (
                 <span className="text-xs px-1.5 py-0.5 rounded border border-blue-800 text-blue-400">
                   DECLASSIFIED
@@ -53,12 +67,8 @@ export default function SourcePanel({ sources, highlightedTitle, onHoverSource }
 
             <p className="text-sm text-slate-200 font-medium leading-snug">
               {source.url ? (
-                <a
-                  href={source.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white hover:underline"
-                >
+                <a href={source.url} target="_blank" rel="noopener noreferrer"
+                  className="hover:text-white hover:underline">
                   {source.title}
                 </a>
               ) : (

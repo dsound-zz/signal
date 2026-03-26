@@ -67,6 +67,7 @@ export async function POST(request: NextRequest) {
     url: c.sourceUrl,
     date: c.docDate,
     declassified: c.declassified,
+    sourceType: c.sourceType,
   }));
 
   console.log('[signal/query] retrieved', chunks.length, 'chunks for query:', query.slice(0, 60));
