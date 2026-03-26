@@ -1,34 +1,47 @@
 'use client';
 
-import { useChat } from 'ai/react';
-import { useState, useRef, useEffect } from 'react';
+import { useChat } from '@ai-sdk/react';
+import { DefaultChatTransport, isTextUIPart } from 'ai';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import AnswerView from './AnswerView';
 import SourcePanel from './SourcePanel';
 import type { Source } from './types';
 
 export default function ChatInterface() {
+  const [inputValue, setInputValue] = useState('');
   const [sourcesMap, setSourcesMap] = useState<Record<string, Source[]>>({});
   const [highlightedTitle, setHighlightedTitle] = useState<string | null>(null);
   const [showContext, setShowContext] = useState(true);
   const pendingSourcesRef = useRef<Source[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
 
-  const { messages, input, handleInputChange, handleSubmit, isLoading, error } = useChat({
-    api: '/api/signal/query',
-    onResponse: (response) => {
-      const raw = response.headers.get('X-Sources');
-      if (raw) {
-        try {
-          pendingSourcesRef.current = JSON.parse(raw) as Source[];
-        } catch {
-          pendingSourcesRef.current = [];
-        }
-      }
-    },
-    onFinish: (message) => {
+  // Custom transport wraps fetch to capture X-Sources header before stream is consumed
+  const transport = useMemo(
+    () =>
+      new DefaultChatTransport({
+        api: '/api/signal/query',
+        fetch: async (url, init) => {
+          const response = await fetch(url as string, init as RequestInit);
+          const raw = response.headers.get('X-Sources');
+          if (raw) {
+            try {
+              pendingSourcesRef.current = JSON.parse(raw) as Source[];
+            } catch {
+              pendingSourcesRef.current = [];
+            }
+          }
+          return response;
+        },
+      }),
+    []
+  );
+
+  const { messages, sendMessage, status, error } = useChat({
+    transport,
+    onFinish: ({ message }) => {
       if (pendingSourcesRef.current.length > 0) {
-        setSourcesMap((prev) => ({ ...prev, [message.id]: pendingSourcesRef.current }));
+        const captured = pendingSourcesRef.current;
+        setSourcesMap((prev) => ({ ...prev, [message.id]: captured }));
         pendingSourcesRef.current = [];
       }
     },
@@ -36,13 +49,22 @@ export default function ChatInterface() {
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, isLoading]);
+  }, [messages, status]);
 
+  const isLoading = status === 'submitted' || status === 'streaming';
   const hasMessages = messages.some((m) => m.role === 'user');
-  const anyContext = Object.values(sourcesMap).some(() => true);
+  const anySourcesLoaded = Object.keys(sourcesMap).length > 0;
 
-  const messageContent = (content: unknown): string =>
-    typeof content === 'string' ? content : '';
+  const getMessageText = (message: (typeof messages)[0]): string =>
+    message.parts.filter(isTextUIPart).map((p) => p.text).join('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const text = inputValue.trim();
+    if (!text || isLoading) return;
+    setInputValue('');
+    await sendMessage({ text });
+  };
 
   return (
     <div className="flex flex-col h-full">
@@ -61,17 +83,16 @@ export default function ChatInterface() {
                 {message.role === 'user' ? (
                   <div className="flex justify-end">
                     <div className="bg-slate-700 rounded-lg px-4 py-2.5 max-w-xl">
-                      <p className="text-sm text-slate-100">{messageContent(message.content)}</p>
+                      <p className="text-sm text-slate-100">{getMessageText(message)}</p>
                     </div>
                   </div>
                 ) : (
                   <div>
-                    {/* Answer header */}
                     <div className="flex items-center justify-between mb-3">
                       <span className="text-xs font-semibold text-slate-500 uppercase tracking-widest">
                         Signal
                       </span>
-                      {anyContext && (
+                      {anySourcesLoaded && (
                         <button
                           onClick={() => setShowContext((v) => !v)}
                           className="text-xs text-slate-400 hover:text-slate-200 transition-colors"
@@ -81,15 +102,13 @@ export default function ChatInterface() {
                       )}
                     </div>
 
-                    {/* Answer + Sources side by side on large screens */}
                     <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-5">
                       <AnswerView
-                        content={messageContent(message.content)}
+                        content={getMessageText(message)}
                         onHoverCitation={setHighlightedTitle}
                         showContext={showContext}
                       />
-
-                      {sourcesMap[message.id] && sourcesMap[message.id].length > 0 && (
+                      {sourcesMap[message.id]?.length > 0 && (
                         <SourcePanel
                           sources={sourcesMap[message.id]}
                           highlightedTitle={highlightedTitle}
@@ -102,7 +121,6 @@ export default function ChatInterface() {
               </div>
             ))}
 
-            {/* Loading state */}
             {isLoading && (
               <div>
                 <span className="text-xs font-semibold text-slate-500 uppercase tracking-widest block mb-3">
@@ -112,7 +130,6 @@ export default function ChatInterface() {
               </div>
             )}
 
-            {/* Error state */}
             {error && !isLoading && (
               <div className="rounded border border-red-900 bg-red-950/30 px-4 py-3">
                 <p className="text-sm text-red-400">{error.message}</p>
@@ -126,14 +143,10 @@ export default function ChatInterface() {
 
       {/* Input */}
       <div className="border-t border-slate-800 px-4 py-4">
-        <form
-          onSubmit={handleSubmit}
-          className="max-w-4xl mx-auto flex gap-3"
-        >
+        <form onSubmit={handleSubmit} className="max-w-4xl mx-auto flex gap-3">
           <input
-            ref={inputRef}
-            value={input}
-            onChange={handleInputChange}
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
             placeholder="Ask about UAP disclosures, government reports, congressional testimony..."
             disabled={isLoading}
             autoComplete="off"
@@ -141,7 +154,7 @@ export default function ChatInterface() {
           />
           <button
             type="submit"
-            disabled={isLoading || !input.trim()}
+            disabled={isLoading || !inputValue.trim()}
             className="px-5 py-2.5 bg-slate-600 hover:bg-slate-500 disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-medium rounded-lg transition-colors"
           >
             Send

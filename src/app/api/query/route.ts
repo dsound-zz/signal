@@ -49,24 +49,13 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    const { answer, sourcesUsed, model } = await generateAnswer({ query: question.trim(), chunks });
-
-    return NextResponse.json({
-      answer,
-      sources: sourcesUsed.map((c) => ({
-        title: c.sourceTitle,
-        url: c.sourceUrl,
-        type: c.sourceType,
-        credibilityTier: c.credibilityTier,
-        pageNumber: c.pageNumber,
-        similarity: c.similarity,
-      })),
-      metadata: {
-        chunksRetrieved: chunks.length,
-        queryTime: Date.now() - start,
-        model,
-      },
-    });
+    const response = await generateAnswer(question.trim(), chunks);
+    
+    // Add custom headers to the response
+    response.headers.set('X-Chunks-Retrieved', String(chunks.length));
+    response.headers.set('X-Query-Time', String(Date.now() - start));
+    
+    return response;
   } catch (error) {
     console.error('[api/query] error:', error);
     return NextResponse.json(

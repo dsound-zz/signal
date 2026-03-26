@@ -47,9 +47,9 @@ export async function retrieveChunks(options: RetrievalOptions): Promise<Retriev
         LIMIT ${topK}
       `;
 
-  const rows = await db.execute(baseQuery);
+  const result = await db.execute(baseQuery);
 
-  const chunks: RetrievedChunk[] = (rows as Array<Record<string, unknown>>).map((row) => ({
+  const chunks: RetrievedChunk[] = (result.rows as Array<Record<string, unknown>>).map((row) => ({
     id: row.id as string,
     content: row.content as string,
     sourceTitle: row.source_title as string,

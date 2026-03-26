@@ -2,9 +2,25 @@ import { NextRequest } from 'next/server';
 import { retrieveChunks } from '@/lib/retrieval';
 import { generateAnswer } from '@/lib/generation';
 
-interface ChatMessage {
+interface UIMessagePart {
+  type: string;
+  text?: string;
+}
+
+interface UIMessage {
   role: string;
-  content: string;
+  parts?: UIMessagePart[];
+  content?: string; // legacy / fallback
+}
+
+function getMessageText(msg: UIMessage): string {
+  if (msg.parts) {
+    return msg.parts
+      .filter((p) => p.type === 'text')
+      .map((p) => p.text ?? '')
+      .join('');
+  }
+  return msg.content ?? '';
 }
 
 export async function POST(request: NextRequest) {
@@ -16,7 +32,7 @@ export async function POST(request: NextRequest) {
   }
 
   const { messages, tierFilter } = body as {
-    messages?: ChatMessage[];
+    messages?: UIMessage[];
     tierFilter?: unknown;
   };
 
@@ -25,11 +41,14 @@ export async function POST(request: NextRequest) {
   }
 
   const lastUserMsg = [...messages].reverse().find((m) => m.role === 'user');
-  if (!lastUserMsg || typeof lastUserMsg.content !== 'string' || lastUserMsg.content.trim().length === 0) {
-    return new Response(JSON.stringify({ error: 'No valid user message found' }), { status: 400 });
+  if (!lastUserMsg) {
+    return new Response(JSON.stringify({ error: 'No user message found' }), { status: 400 });
   }
 
-  const query = lastUserMsg.content.trim();
+  const query = getMessageText(lastUserMsg).trim();
+  if (!query) {
+    return new Response(JSON.stringify({ error: 'User message has no text content' }), { status: 400 });
+  }
 
   if (tierFilter !== undefined && tierFilter !== 1 && tierFilter !== 2 && tierFilter !== 3) {
     return new Response(JSON.stringify({ error: 'tierFilter must be 1, 2, or 3' }), { status: 400 });
@@ -50,15 +69,9 @@ export async function POST(request: NextRequest) {
     declassified: c.declassified,
   }));
 
-  console.log('[signal/query] retrieved', chunks.length, 'chunks, streaming response');
+  console.log('[signal/query] retrieved', chunks.length, 'chunks for query:', query.slice(0, 60));
 
-  const stream = await generateAnswer(query, chunks);
-
-  return new Response(stream, {
-    headers: {
-      'Content-Type': 'text/event-stream',
-      'Cache-Control': 'no-cache',
-      'X-Sources': JSON.stringify(sources),
-    },
+  return generateAnswer(query, chunks, {
+    'X-Sources': JSON.stringify(sources),
   });
 }

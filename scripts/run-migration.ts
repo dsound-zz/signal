@@ -10,7 +10,7 @@ if (!DATABASE_URL) {
 }
 
 async function runMigration() {
-  const sql = neon(DATABASE_URL);
+  const sql = neon(DATABASE_URL!);
   
   try {
     console.log('[migration] Enabling pgvector extension...');

@@ -42,8 +42,18 @@ function formatChunksAsContext(chunks: RetrievedChunk[]): string {
 
 export async function generateAnswer(
   query: string,
-  chunks: RetrievedChunk[]
-): Promise<ReadableStream> {
+  chunks: RetrievedChunk[],
+  extraHeaders?: Record<string, string>
+): Promise<Response> {
+  if (chunks.length === 0) {
+    const result = streamText({
+      model: anthropic('claude-sonnet-4-6'),
+      system: SIGNAL_SYSTEM_PROMPT,
+      messages: [{ role: 'user', content: `SOURCE DOCUMENTS:\n\n(No documents retrieved)\n\n---\n\nQUESTION: ${query}` }],
+    });
+    return result.toUIMessageStreamResponse({ headers: extraHeaders });
+  }
+
   const context = formatChunksAsContext(chunks);
   const userMessage = `SOURCE DOCUMENTS:\n\n${context}\n\n---\n\nQUESTION: ${query}`;
 
@@ -55,5 +65,5 @@ export async function generateAnswer(
 
   console.log('[generation] streaming answer for query, using', chunks.length, 'chunks');
 
-  return result.toDataStream();
+  return result.toUIMessageStreamResponse({ headers: extraHeaders });
 }

@@ -15,7 +15,9 @@
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^3.0.64",
+    "@ai-sdk/react": "^3.0.140",
     "@anthropic-ai/sdk": "^0.80.0",
+    "@google/genai": "^1.46.0",
     "@google/generative-ai": "^0.24.1",
     "@neondatabase/serverless": "^1.0.2",
     "ai": "^6.0.138",
