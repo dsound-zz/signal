@@ -135,6 +135,14 @@
     "declassified": true
   },
   {
+    "pdfUrl": "https://www.armed-services.senate.gov/imo/media/doc/[transcript]",
+    "sourceTitle": "Senate Armed Services UAP Hearing June 2025",
+    "sourceType": "congressional_testimony",
+    "credibilityTier": 2,
+    "docDate": "2025-06-01",
+    "declassified": true
+  },
+  {
     "pdfUrl": "https://oversight.house.gov/wp-content/uploads/2023/07/Ryan-HOC-Testimony.pdf",
     "sourceTitle": "Ryan Graves Written Testimony House Oversight July 2023",
     "sourceUrl": "https://oversight.house.gov/hearing/unidentified-anomalous-phenomena-implications-on-national-security-public-safety-and-government-transparency/",
@@ -277,5 +285,50 @@
     "credibilityTier": 3,
     "docDate": "2024-11-13",
     "declassified": false
+  },
+  {
+    "localPath": "pdfs/Spielberger-Written-Testimony.pdf",
+    "sourceTitle": "Task Force on the Declassification of Federal Secrets - Spielberger",
+    "sourceUrl": "https://oversight.house.gov/hearing/restoring-public-trust-through-uap-transparency-and-whistleblower-protection/",
+    "sourceType": "congressional_testimony",
+    "credibilityTier": 2,
+    "docDate": "2025-06-01",
+    "declassified": true
+  },
+  {
+    "localPath": "pdfs/Borland-Written-Testimony.pdf",
+    "sourceTitle": "Task Force on the Declassification of Federal Secrets - Borland",
+    "sourceUrl": "https://oversight.house.gov/hearing/restoring-public-trust-through-uap-transparency-and-whistleblower-protection/",
+    "sourceType": "congressional_testimony",
+    "credibilityTier": 2,
+    "docDate": "2025-06-01",
+    "declassified": false
+  },
+  {
+    "localPath": "pdfs/George-Knapp-Written-Testimony.pdf",
+    "sourceTitle": "Task Force on the Declassification of Federal Secrets - Geaorge Knapp",
+    "sourceUrl": "https://oversight.house.gov/hearing/restoring-public-trust-through-uap-transparency-and-whistleblower-protection/",
+    "sourceType": "congressional_testimony",
+    "credibilityTier": 2,
+    "docDate": "2025-06-01",
+    "declassified": true
+  },
+  {
+    "localPath": "pdfs/Wiggins-Written-Statement.pdf",
+    "sourceTitle": "Task Force on the Declassification of Federal Secrets - Wiggins",
+    "sourceUrl": "https://oversight.house.gov/hearing/restoring-public-trust-through-uap-transparency-and-whistleblower-protection/",
+    "sourceType": "congressional_testimony",
+    "credibilityTier": 2,
+    "docDate": "2025-06-01",
+    "declassified": true
+  },
+  {
+    "localPath": "pdfs/Nuccetelli-Written-Testimony.pdf",
+    "sourceTitle": "Task Force on the Declassification of Federal Secrets - Nuccetelli",
+    "sourceUrl": "https://oversight.house.gov/hearing/restoring-public-trust-through-uap-transparency-and-whistleblower-protection/",
+    "sourceType": "congressional_testimony",
+    "credibilityTier": 2,
+    "docDate": "2025-06-01",
+    "declassified": true
   }
 ]
