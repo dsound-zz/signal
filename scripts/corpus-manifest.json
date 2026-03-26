@@ -107,12 +107,101 @@
     "docDate": "2024-01-01",
     "declassified": true
   },
+
   {
-    "pdfUrl": "https://smd-cms.nasa.gov/wp-content/uploads/2023/09/uap-independent-study-team-final-report.pdf",
+    "localPath": "pdfs/NASA_UAP_Study_2023.pdf",
     "sourceTitle": "NASA UAP Independent Study Report 2023",
-    "sourceType": "scientific_report",
+    "sourceType": "scientific_paper",
     "credibilityTier": 2,
     "docDate": "2023-09-14",
+    "declassified": true,
+    "sourceUrl": "https://smd-cms.nasa.gov/wp-content/uploads/2023/09/uap-independent-study-team-final-report.pdf"
+  },
+  {
+    "pdfUrl": "https://docs.house.gov/meetings/GO/GO06/20230726/116282/HHRG-118-GO06-Transcript-20230726.pdf",
+    "sourceTitle": "House Oversight UAP Hearing Transcript July 2023",
+    "sourceType": "congressional_testimony",
+    "credibilityTier": 2,
+    "docDate": "2023-07-26",
     "declassified": true
+  },
+  {
+    "pdfUrl": "https://oversight.house.gov/wp-content/uploads/2023/07/David-Fravor-Statement-for-House-Oversight-Committee.pdf",
+    "sourceTitle": "David Fravor Written Statement House Oversight 2023",
+    "sourceType": "congressional_testimony",
+    "credibilityTier": 2,
+    "docDate": "2023-07-26",
+    "declassified": true
+  },
+  {
+    "pdfUrl": "https://documents2.theblackvault.com/documents/dia/AAWSAP-DIRDs/DIRD_05_Materials_for_Advanced_Aerospace_Platforms.pdf",
+    "sourceTitle": "DIRD 05: Materials for Advanced Aerospace Platforms",
+    "sourceType": "foia_document",
+    "credibilityTier": 2,
+    "docDate": "2010-01-01",
+    "declassified": true
+  },
+  {
+    "pdfUrl": "https://documents2.theblackvault.com/documents/dia/AAWSAP-DIRDs/DIRD_05_Materials_for_Advanced_Aerospace_Platforms.pdf",
+    "sourceTitle": "DIRD 05: Materials for Advanced Aerospace Platforms",
+    "sourceType": "foia_document",
+    "credibilityTier": 2,
+    "docDate": "2009-12-01",
+    "declassified": true,
+    "sourceUrl": "https://www.theblackvault.com/documentarchive/the-advanced-aerospace-weapon-system-applications-program-aawsap-documentation/"
+  },
+  {
+    "pdfUrl": "https://documents2.theblackvault.com/documents/dia/AAWSAP-DIRDs/DIRD_13-DIRD_Warp_Drive_Dark_energy_and_the_Manipulation_of_Extra_Dimensions.pdf",
+    "sourceTitle": "DIRD 13: Warp Drive, Dark Energy, and the Manipulation of Extra Dimensions",
+    "sourceType": "foia_document",
+    "credibilityTier": 2,
+    "docDate": "2010-04-01",
+    "declassified": true,
+    "sourceUrl": "https://www.theblackvault.com/documentarchive/the-advanced-aerospace-weapon-system-applications-program-aawsap-documentation/"
+  },
+  {
+    "pdfUrl": "https://documents2.theblackvault.com/documents/dia/AAWSAP-DIRDs/DIRD_31-DIRD_Detection_and_High_Resolution_Tracking_of_Vehicles_at_Hypersonic_Velocities.pdf",
+    "sourceTitle": "DIRD 31: Detection and High Resolution Tracking of Vehicles at Hypersonic Velocities",
+    "sourceType": "foia_document",
+    "credibilityTier": 2,
+    "docDate": "2010-08-30",
+    "declassified": true,
+    "sourceUrl": "https://www.theblackvault.com/documentarchive/the-advanced-aerospace-weapon-system-applications-program-aawsap-documentation/"
+  },
+  {
+    "pdfUrl": "https://documents2.theblackvault.com/documents/dia/AAWSAP-DIRDs/DIRD_07-DIRD_Invisibility_Cloaking-Theory_and_Experiments.pdf",
+    "sourceTitle": "DIRD 07: Invisibility Cloaking — Theory and Experiments",
+    "sourceType": "foia_document",
+    "credibilityTier": 2,
+    "docDate": "2010-08-30",
+    "declassified": true,
+    "sourceUrl": "https://www.theblackvault.com/documentarchive/the-advanced-aerospace-weapon-system-applications-program-aawsap-documentation/"
+  },
+  {
+    "pdfUrl": "https://documents2.theblackvault.com/documents/dia/AAWSAP-DIRDs/DIRD_18-DIRD_Traversible_Wormholes_Stargates_and_Negative_Energy.pdf",
+    "sourceTitle": "DIRD 08: Positron Aerospace Propulsion",
+    "sourceType": "foia_document",
+    "credibilityTier": 2,
+    "docDate": "2010-08-30",
+    "declassified": true,
+    "sourceUrl": "https://www.theblackvault.com/documentarchive/the-advanced-aerospace-weapon-system-applications-program-aawsap-documentation/"
+  },
+  {
+    "localPath": "pdfs/DIRD_06-DIRD_Space_Access-Where_Weve_Been_and_Where_We_Could_Go.pdf",
+    "sourceTitle": "DIRD 06: Space Access — Where We've Been and Where We Could Go",
+    "sourceType": "foia_document",
+    "credibilityTier": 2,
+    "docDate": "2010-08-30",
+    "declassified": true,
+    "sourceUrl": "https://www.theblackvault.com/documentarchive/the-advanced-aerospace-weapon-system-applications-program-aawsap-documentation/"
+  },
+  {
+    "pdfUrl": "https://upload.wikimedia.org/wikipedia/commons/2/21/Project_Blue_Book,_BBA-PBSR11-300.pdf",
+    "sourceTitle": "Project Blue Book Special Report No. 14",
+    "sourceType": "foia_document",
+    "credibilityTier": 3,
+    "docDate": "1955-05-05",
+    "declassified": true,
+    "sourceUrl": "https://www.archives.gov/research/military/air-force/ufos"
   }
 ]

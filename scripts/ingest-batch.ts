@@ -8,7 +8,7 @@
  */
 
 import { execSync } from 'child_process';
-import { readFileSync, writeFileSync, unlinkSync, existsSync } from 'fs';
+import { readFileSync, unlinkSync, existsSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
 import { neon } from '@neondatabase/serverless';
@@ -26,12 +26,12 @@ interface ManifestEntry {
   sourceTitle: string;
   sourceUrl?: string;
   sourceType:
-    | 'government_report'
-    | 'congressional_testimony'
-    | 'foia_document'
-    | 'scientific_paper'
-    | 'investigative_journalism'
-    | 'witness_account';
+  | 'government_report'
+  | 'congressional_testimony'
+  | 'foia_document'
+  | 'scientific_paper'
+  | 'investigative_journalism'
+  | 'witness_account';
   credibilityTier: 1 | 2 | 3;
   docDate: string;
   declassified: boolean;
